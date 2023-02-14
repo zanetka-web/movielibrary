@@ -1,10 +1,11 @@
-package pl.jaknauczycsieprogramowania.movielibrary;
+package pl.jaknauczycsieprogramowania.movielibrary.repository;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import pl.jaknauczycsieprogramowania.movielibrary.models.Movie;
 
 import java.util.List;
 
@@ -25,13 +26,19 @@ public class MovieRepository {
     }
 
 
-    public int save(List<Movie> movies) {
-        movies.forEach(movie -> jdbcTemplate
+    public String save(List<Movie> movies) {
+        movies.forEach(movie -> save(movie));
+
+        return "It's saved!";
+    }
+
+    public String save(Movie movie) {
+        jdbcTemplate
                 .update("INSERT INTO movie(name, rating) VALUES(?, ?)",
                         movie.getName(), movie.getRating()
-                ));
+                );
 
-        return 1;
+        return "Movie saved!";
     }
 
     public int update(Movie movie){

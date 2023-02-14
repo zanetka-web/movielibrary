@@ -1,4 +1,4 @@
-package pl.jaknauczycsieprogramowania.movielibrary;
+package pl.jaknauczycsieprogramowania.movielibrary.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
