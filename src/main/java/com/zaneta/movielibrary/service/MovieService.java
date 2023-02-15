@@ -1,5 +1,5 @@
 package com.zaneta.movielibrary.service;
-
+import com.zaneta.movielibrary.interfaces.MovieServiceInterface;
 import com.zaneta.movielibrary.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,10 +8,11 @@ import com.zaneta.movielibrary.repository.MovieRepository;
 import java.util.List;
 
 @Service
-public class MovieService {
+public class MovieService implements MovieServiceInterface {
 
     @Autowired
     MovieRepository movieRepository;
+
     public List<Movie> getAll() {
         return movieRepository.getAll();
     }
