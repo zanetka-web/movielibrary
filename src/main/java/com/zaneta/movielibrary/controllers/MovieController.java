@@ -1,9 +1,10 @@
-package pl.jaknauczycsieprogramowania.movielibrary.controllers;
+package com.zaneta.movielibrary.controllers;
 
+import com.zaneta.movielibrary.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.jaknauczycsieprogramowania.movielibrary.models.Movie;
-import pl.jaknauczycsieprogramowania.movielibrary.service.MovieService;
+import com.zaneta.movielibrary.service.MovieService;
+
 import java.util.List;
 
 @RestController
@@ -14,22 +15,22 @@ public class MovieController {
     MovieService movieService;
 
     @GetMapping("")
-    public List<Movie> getAll(){
+    public List<Movie> getAll() {
         return movieService.getAll();
     }
 
     @GetMapping("/{id}")
-        public Movie getByID(@PathVariable("id") int id){
+    public Movie getByID(@PathVariable("id") int id) {
         return movieService.getById(id);
     }
 
     @PostMapping("addmultiple")
-    public String add(@RequestBody List<Movie> movies){
+    public String add(@RequestBody List<Movie> movies) {
         return movieService.add(movies);
     }
 
     @PostMapping("add")
-    public String add(@RequestBody Movie movie){
+    public String add(@RequestBody Movie movie) {
         return movieService.add(movie);
     }
 
@@ -40,13 +41,13 @@ public class MovieController {
     }
 
     @PatchMapping("/{id}")
-    public int partiallyUpdate(@PathVariable("id") int id, @RequestBody Movie updatedMovie){
+    public int partiallyUpdate(@PathVariable("id") int id, @RequestBody Movie updatedMovie) {
         return movieService.partiallyUpdate(id, updatedMovie);
 
     }
 
     @DeleteMapping("/{id}")
-    public int delete(@PathVariable("id") int id){
+    public int delete(@PathVariable("id") int id) {
         return movieService.delete(id);
     }
 }

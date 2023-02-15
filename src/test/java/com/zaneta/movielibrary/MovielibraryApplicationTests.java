@@ -1,4 +1,4 @@
-package pl.jaknauczycsieprogramowania.movielibrary;
+package com.zaneta.movielibrary;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

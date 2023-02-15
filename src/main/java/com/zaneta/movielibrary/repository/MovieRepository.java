@@ -1,11 +1,11 @@
-package pl.jaknauczycsieprogramowania.movielibrary.repository;
+package com.zaneta.movielibrary.repository;
 
 
+import com.zaneta.movielibrary.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pl.jaknauczycsieprogramowania.movielibrary.models.Movie;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ public class MovieRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Movie> getAll(){
-       return jdbcTemplate.query("SELECT id, name, rating From movie",
+    public List<Movie> getAll() {
+        return jdbcTemplate.query("SELECT id, name, rating From movie",
                 BeanPropertyRowMapper.newInstance(Movie.class));
     }
 
-    public Movie getById(int id){
-      return jdbcTemplate.queryForObject("SELECT id, name, rating FROM movie WHERE " + "id = ?",
+    public Movie getById(int id) {
+        return jdbcTemplate.queryForObject("SELECT id, name, rating FROM movie WHERE " + "id = ?",
                 BeanPropertyRowMapper.newInstance(Movie.class), id);
     }
 
@@ -41,14 +41,12 @@ public class MovieRepository {
         return "Movie saved!";
     }
 
-    public int update(Movie movie){
+    public int update(Movie movie) {
         return jdbcTemplate.update("UPDATE movie SET name=?, rating=? WHERE id=?",
                 movie.getName(), movie.getRating(), movie.getId());
     }
 
-    public int delete(int id){
-       return jdbcTemplate.update("DELETE FROM movie WHERE id=?", id);
+    public int delete(int id) {
+        return jdbcTemplate.update("DELETE FROM movie WHERE id=?", id);
     }
-
-
 }
