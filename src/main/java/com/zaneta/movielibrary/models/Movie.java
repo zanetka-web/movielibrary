@@ -1,4 +1,5 @@
-package pl.jaknauczycsieprogramowania.movielibrary;
+package com.zaneta.movielibrary.models;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
-
-
     private int id;
     private String name;
     private int rating;
-
 }

@@ -1,6 +1,7 @@
-package pl.jaknauczycsieprogramowania.movielibrary;
+package com.zaneta.movielibrary.repository;
 
 
+import com.zaneta.movielibrary.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,34 +15,38 @@ public class MovieRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<Movie> getAll(){
-       return jdbcTemplate.query("SELECT id, name, rating From movie",
+    public List<Movie> getAll() {
+        return jdbcTemplate.query("SELECT id, name, rating From movie",
                 BeanPropertyRowMapper.newInstance(Movie.class));
     }
 
-    public Movie getById(int id){
-      return jdbcTemplate.queryForObject("SELECT id, name, rating FROM movie WHERE " + "id = ?",
+    public Movie getById(int id) {
+        return jdbcTemplate.queryForObject("SELECT id, name, rating FROM movie WHERE " + "id = ?",
                 BeanPropertyRowMapper.newInstance(Movie.class), id);
     }
 
 
-    public int save(List<Movie> movies) {
-        movies.forEach(movie -> jdbcTemplate
-                .update("INSERT INTO movie(name, rating) VALUES(?, ?)",
-                        movie.getName(), movie.getRating()
-                ));
+    public String save(List<Movie> movies) {
+        movies.forEach(movie -> save(movie));
 
-        return 1;
+        return "It's saved!";
     }
 
-    public int update(Movie movie){
+    public String save(Movie movie) {
+        jdbcTemplate
+                .update("INSERT INTO movie(name, rating) VALUES(?, ?)",
+                        movie.getName(), movie.getRating()
+                );
+
+        return "Movie saved!";
+    }
+
+    public int update(Movie movie) {
         return jdbcTemplate.update("UPDATE movie SET name=?, rating=? WHERE id=?",
                 movie.getName(), movie.getRating(), movie.getId());
     }
 
-    public int delete(int id){
-       return jdbcTemplate.update("DELETE FROM movie WHERE id=?", id);
+    public int delete(int id) {
+        return jdbcTemplate.update("DELETE FROM movie WHERE id=?", id);
     }
-
-
 }
