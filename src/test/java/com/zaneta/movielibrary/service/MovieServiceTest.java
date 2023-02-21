@@ -91,6 +91,7 @@ class MovieServiceTest {
         assertThat(result).isSameAs(1);
     }
 
+
     @Test
     void shouldNotUpdateMovieWhenNull() {
         when(movieRepository.getById(any(Integer.class))).thenReturn(null);
