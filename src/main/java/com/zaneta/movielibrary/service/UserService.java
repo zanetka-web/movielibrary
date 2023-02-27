@@ -14,33 +14,41 @@ public class UserService implements UserServiceInterface {
 
 
     public String createNewUer(User user) {
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        } catch (Exception e){
+            return null;
+        }
+
     }
 
-
     public User getById(int id) {
-        return userRepository.getById(id);
+        try {
+            return userRepository.getById(id);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 
     public String updateNameAndEmail(int id, User updateUser) {
-        User user = userRepository.getById(id);
-        if (user != null) {
+        try {
+            User user = userRepository.getById(id);
+
             user.setName(updateUser.getName());
             user.setEmail(updateUser.getEmail());
 
             userRepository.update(user);
             return "data updated!";
-        } else {
+        } catch (Exception e) {
             return "did not update";
         }
-
-
     }
 
     public String changePassword(int id, String previous, String newPassword) {
-        User user = userRepository.getById(id);
-        if (user != null) {
+        try {
+            User user = userRepository.getById(id);
+
             if (user.getPassword().equals(previous)) {
                 userRepository.updatePassword(id, newPassword);
                 return "password updated";
@@ -48,24 +56,24 @@ public class UserService implements UserServiceInterface {
                 return "wrong password";
             }
 
-        } else {
-            return "password cannot be updated";
+        } catch (Exception e) {
+            return "password cannot be updated " + e.getMessage();
         }
     }
 
     public String deleteUser(int id, String username, String password) {
-        User user = userRepository.getById(id);
-        User userAdmin = userRepository.getByUsernameAndPassword(username, password);
-        if (user != null) {
+
+        try {
+            User user = userRepository.getById(id);
+            User userAdmin = userRepository.getByUsernameAndPassword(username, password);
             if (userAdmin.getType().equals("admin")) {
                 userRepository.deleteUser(id);
                 return "user deleted";
             } else {
                 return "you are not allowed to delete the user";
             }
-
-        } else {
-            return "user is not found";
+        } catch (Exception e) {
+            return "user is not found " + e.getMessage();
         }
     }
 }
