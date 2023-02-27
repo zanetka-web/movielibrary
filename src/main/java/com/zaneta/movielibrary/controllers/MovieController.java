@@ -40,7 +40,7 @@ public class MovieController {
 
     @PostMapping("addmultiple")
     public ResponseEntity add(@RequestBody List<Movie> movies) {
-        if (movies != null) {
+        if (movies != null && movies.size() > 0) {
             return ResponseEntity.ok(movieService.add(movies));
         } else {
             return ResponseConfig.getResponse(HttpStatus.BAD_REQUEST, "movies were not added");
@@ -49,7 +49,7 @@ public class MovieController {
 
     @PostMapping("add")
     public ResponseEntity add(@RequestBody Movie movie) {
-        if (movie != null) {
+        if (movie != null && movie.getName() != null && movie.getRating() != 0) {
             return ResponseEntity.ok(movieService.add(movie));
         } else {
             return ResponseConfig.getResponse(HttpStatus.BAD_REQUEST, " movie is not added");
@@ -71,7 +71,7 @@ public class MovieController {
     public ResponseEntity partiallyUpdate(@PathVariable("id") int id, @RequestBody Movie updatedMovie) {
         Movie movie = movieService.getById(id);
         int result = movieService.updateMovie(id, updatedMovie);
-        if (movie != null && movie.getName() != null && movie.getRating() != 0) {
+        if (movie != null && movie.getName() != null) {
             return ResponseEntity.ok(result);
         } else {
             return ResponseConfig.getResponse(HttpStatus.BAD_REQUEST, "movie cannot be updated");
