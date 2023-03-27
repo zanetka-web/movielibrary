@@ -23,6 +23,8 @@ public class RentService implements RentServiceInterface {
     @Autowired
     UserRepository userRepository;
 
+    final int DAYS_FOR_RENT = 5;
+
     public String rent(RentRequest request) {
         try {
             User user = userService.getById(request.getUserId());
@@ -34,7 +36,7 @@ public class RentService implements RentServiceInterface {
             if (canRent && lastRent == null && isMovieAvailable) {
                 int result = rentRepository.rent(request, getDateOfRenting(), getExpectingDateToReturn());
                 if (result == 1) {
-                    return user.getName() + " rented the movie: " + movie.getName();
+                    return getMovieResponse(user.getName(), movie.getName());
                 }
             } else if (canRent && lastRent != null && isMovieAvailable) {
 
@@ -42,7 +44,7 @@ public class RentService implements RentServiceInterface {
                 if (lastRent.getExpectingDateToReturn().compareTo(lastRent.getDateOfReturn()) >= 0) {
                     int result = rentRepository.rent(request, getDateOfRenting(), getExpectingDateToReturn());
                     if (result == 1) {
-                        return user.getName() + " rented the movie: " + movie.getName();
+                        return getMovieResponse(user.getName(), movie.getName());
                     }
                 }
             }
@@ -60,10 +62,13 @@ public class RentService implements RentServiceInterface {
 
     public Date getExpectingDateToReturn() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 5);
+        cal.add(Calendar.DATE, DAYS_FOR_RENT);
         return cal.getTime();
     }
 
+    public String getMovieResponse( String userName,String movieName){
+        return userName + " rented the movie: " +movieName;
+    }
 
     public RentReport getAllRantingDataForAllUsers(String username, String password) {
         try {

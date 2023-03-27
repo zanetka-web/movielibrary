@@ -37,7 +37,7 @@ public class RentController {
         if (result != null) {
             return ResponseEntity.ok(result);
         } else {
-            return ResponseConfig.getResponse(HttpStatus.BAD_REQUEST, "bad request");
+            return ResponseConfig.getResponse(HttpStatus.BAD_REQUEST, "User not authorized to see the report");
         }
     }
 

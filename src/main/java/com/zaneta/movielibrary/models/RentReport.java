@@ -17,6 +17,4 @@ public class RentReport {
     Date dateOfReturn;
     Date expectingDateToReturn;
     int isRented;
-
-
 }
